@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code from version control
+                checkout scm
+            }
+        }
+        
+        stage('Run Set 1 Features') {
+            steps {
+                script {
+                    // Run Gradle with Set1StepDefinitions
+                    sh './gradlew test --tests your.package.Set1StepDefinitions'
+                }
+            }
+        }
+        
+        stage('Run Set 2 Features') {
+            steps {
+                script {
+                    // Run Gradle with Set2StepDefinitions
+                    sh './gradlew test --tests your.package.Set2StepDefinitions'
+                }
+            }
+        }
+        
+        // Add more stages for additional sets as needed
+        
+        stage('Publish Test Results') {
+            steps {
+                script {
+                    // Optionally, publish test results or generate reports
+                    // Adjust this step based on your project's needs
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            // Clean up or perform any post-build actions
+        }
+    }
+}
